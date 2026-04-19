@@ -1,4 +1,3 @@
-// ORIGINAL FILE WITH NO ENCRYPTION AND DECRYPTION
 #include <stdio.h>
 #include <string.h>
 #define MAX_USERS 30
@@ -1142,7 +1141,7 @@ void adminSide(Car garage[CATEGORIES][SLOTS]) {
     			break;
 				case 7: displayAllCars(garage); 
 				break;
-				case 78: generateReceipt();
+				case 8: generateReceipt();
     				break;
 				case 9: 
 					printf("Exiting Admin Mode.\n");
@@ -1357,11 +1356,11 @@ void deleteCar (Car garage[CATEGORIES][SLOTS]) {
         }
         else if (targetID == 0) {
             printf("Returning to menu...\n");
-            exitLoop = 1; // ? exit condition
+            exitLoop = 1; 
         }
         else {
 
-            // ?? CHECK FIRST (no deletion yet)
+           
             for (i = 0; i < CATEGORIES; i++) {
                 for (j = 0; j < SLOTS; j++) {
                     if (garage[i][j].carID == targetID) {
@@ -1524,7 +1523,7 @@ void loadAllCars(Car garage[CATEGORIES][SLOTS]) {
     FILE *fp = fopen("all_cars.txt", "r");
 int i,j;
     if (fp == NULL) {
-        return; // no file ? keep initialized cars
+        return;
     }
 
     char line[512];
@@ -1536,7 +1535,7 @@ int i,j;
 
     int updatedCount = 0;
 
-    // Skip header
+  
     fgets(line, sizeof(line), fp);
 
     while (fgets(line, sizeof(line), fp)) {
@@ -1549,19 +1548,19 @@ int i,j;
             status, rentedBy
         );
 
-        // ? Ignore bad lines
+       
         if (fields != 10) continue;
 
-        // ? Ignore invalid IDs
+       
         if (carID < 100 || carID > 599) continue;
 
-        // ?? FIND AND UPDATE EXISTING CAR
+        
         for ( i = 0; i < CATEGORIES; i++) {
             for ( j = 0; j < SLOTS; j++) {
 
                 if (garage[i][j].carID == carID) {
 
-                    // ? ONLY update dynamic fields
+                   
                     garage[i][j].isRented = (strcmp(status, "Rented") == 0);
                     strcpy(garage[i][j].rentedBy, rentedBy);
 
@@ -1573,7 +1572,7 @@ int i,j;
 
     fclose(fp);
 
-    // ?? SAFETY CHECK: if file is incomplete, ignore it
+    
     if (updatedCount == 0) {
         printf("Warning: Car data file invalid or empty. Using default data.\n");
     }
@@ -2158,7 +2157,7 @@ void editCar(Car garage[CATEGORIES][SLOTS]) {
         return;
     }
 
-    // ?? FIND CAR
+   
     for (i = 0; i < CATEGORIES; i++) {
         for (j = 0; j < SLOTS; j++) {
 
@@ -2168,7 +2167,7 @@ void editCar(Car garage[CATEGORIES][SLOTS]) {
                 printf("\nCar Found!\n");
                 printf("Model: %s\n", garage[i][j].model);
 
-                // ?? EDIT MENU
+               
                 int choice;
                 printf("\nWhat do you want to edit?\n");
                 printf("1. Model\n");
@@ -2220,7 +2219,7 @@ void editCar(Car garage[CATEGORIES][SLOTS]) {
 
                 printf("Car updated successfully!\n");
 
-                // ?? SAVE CHANGES
+               
                 saveAllCars(garage);
 
                 return;
